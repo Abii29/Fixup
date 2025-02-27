@@ -40,4 +40,25 @@ const getUserProfile = async (req, res) => {
     }
 };
 
-module.exports = { createUser, getUserProfile };
+const updateUserProfile = async (req, res) => {
+    try {
+        const userId = req.user.userId; // Extract user ID from the token
+
+        const updatedUser = await User.findByIdAndUpdate(
+            userId,
+            { $set: req.body }, // Update only the fields provided
+            { new: true, runValidators: true } // Return updated user & validate input
+        );
+
+        if (!updatedUser) {
+            return res.status(404).json({ message: "User not found" });
+        }
+
+        res.status(200).json({ message: "Profile updated successfully", user: updatedUser });
+    } catch (error) {
+        res.status(500).json({ message: "Error updating profile", error: error.message });
+    }
+};
+
+
+module.exports = { createUser, getUserProfile, updateUserProfile, };

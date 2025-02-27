@@ -1,3 +1,4 @@
+const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const { body, validationResult } = require('express-validator');
@@ -82,7 +83,6 @@ const getProviderProfile = async (req, res) => {
     }
 };
 
-
 const updateProviderProfile = async (req, res) => {
     try {
         const updatedProvider = await ServiceProvider.findByIdAndUpdate(req.user.userId, req.body, { new: true, runValidators: true });
@@ -101,14 +101,37 @@ const deleteProvider = async (req, res) => {
     }
 };
 
+// ✅ Get all service providers (Fixed incorrect model reference)
 const getAllProviders = async (req, res) => {
     try {
-        const providers = await ServiceProvider.find().select('-password');
+        const providers = await ServiceProvider.find();
         res.status(200).json(providers);
     } catch (error) {
-        res.status(500).json({ message: "Error retrieving providers", error: error.message });
+        res.status(500).json({ message: "Server Error", error: error.message });
     }
 };
+
+// ✅ Get a provider by ID (Fixed incorrect model reference)
+const getProviderById = async (req, res) => {
+    try {
+        const providerId = req.params.id.trim(); // Remove any extra spaces
+
+        if (!mongoose.Types.ObjectId.isValid(providerId)) {
+            return res.status(400).json({ message: "Invalid provider ID format" });
+        }
+
+        const provider = await ServiceProvider.findById(providerId);
+
+        if (!provider) {
+            return res.status(404).json({ message: "Provider not found" });
+        }
+
+        res.status(200).json(provider);
+    } catch (error) {
+        res.status(500).json({ message: "Server Error", error: error.message });
+    }
+};
+
 
 const updateAvailability = async (req, res) => {
     try {
@@ -123,6 +146,7 @@ const updateAvailability = async (req, res) => {
     }
 };
 
+// ✅ Export all functions properly
 module.exports = {
     createProvider,
     loginProvider,
@@ -133,5 +157,6 @@ module.exports = {
     providerValidationRules,
     handleValidationErrors,
     loginValidationRules,
-    updateAvailability
+    updateAvailability,
+    getProviderById
 };

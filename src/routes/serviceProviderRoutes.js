@@ -12,7 +12,8 @@ const {
     providerValidationRules,
     handleValidationErrors,
     loginValidationRules,
-    updateAvailability
+    updateAvailability,
+    getProviderById,
 } = require('../controllers/serviceProviderController');
 
 router.post('/signup', providerValidationRules(), handleValidationErrors, createProvider);
@@ -22,5 +23,6 @@ router.put('/profile', authenticateToken, updateProviderProfile);
 router.put('/availability', authenticateToken, updateAvailability);
 router.delete('/profile', authenticateToken, deleteProvider);
 router.get('/', authenticateToken, getAllProviders);
+router.get('/:id', authenticateToken, getProviderById); // ✅ Added authentication
 
 module.exports = router;
