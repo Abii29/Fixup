@@ -2,6 +2,7 @@ const Booking = require('../models/Booking');
 
 // Create new booking
 const createBooking = async (req, res) => {
+    console.log("Booking route reached");
     try {
         const { user, serviceProvider, serviceType, bookingDate, additionalDetails } = req.body;
 

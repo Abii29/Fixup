@@ -1,10 +1,11 @@
-const http = require('http');  // ✅ Fix: Import the HTTP module
+const http = require('http');  //  Fix: Import the HTTP module
 const express = require('express');
 const cors = require('cors');
 const socketIo = require('socket.io');
 const dotenv = require('dotenv');
 const connectDB = require('./src/config/db');
 const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
 
 dotenv.config(); // Ensure environment variables are loaded
 const app = express();
@@ -27,7 +28,7 @@ io.on('connection', (socket) => {
     socket.on('sendMessage', async ({ senderId, receiverId, message }) => {
         const chat = new Chat({ senderId, receiverId, message });
         await chat.save();
-        io.emit('receiveMessage', chat); // Broadcast message to all clients
+        io.emit('receiveMessage', chat); 
     });
 
     socket.on('disconnect', () => {
@@ -39,11 +40,15 @@ io.on('connection', (socket) => {
 const authRoutes = require('./src/routes/authRoutes');
 const userRoutes = require('./src/routes/userRoutes');
 const serviceProviderRoutes = require('./src/routes/serviceProviderRoutes'); // Ensure correct path
+const bookingRoutes = require('./src/routes/bookingRoutes');
 
 // Use Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
-app.use('/api/providers', serviceProviderRoutes); // ✅ Fixed route path
+app.use('/api/providers', serviceProviderRoutes); //
+app.use('/api', bookingRoutes);
+app.use(bodyParser.json());
+
 
 // Test route to check if the server is running
 app.get('/', (req, res) => {
