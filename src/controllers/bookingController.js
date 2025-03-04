@@ -1,6 +1,6 @@
 const Booking = require('../models/Booking');
 
-// Create a new booking
+// Create new booking
 const createBooking = async (req, res) => {
     try {
         const { user, serviceProvider, serviceType, bookingDate, additionalDetails } = req.body;
@@ -25,7 +25,7 @@ const createBooking = async (req, res) => {
     }
 };
 
-// Get a booking by ID
+// booking ID
 const getBookingById = async (req, res) => {
     try {
         const booking = await Booking.findById(req.params.id).populate('user serviceProvider');
@@ -34,7 +34,7 @@ const getBookingById = async (req, res) => {
         }
         res.status(200).json(booking);
     } catch (error) {
-        res.status(500).json({ message: 'Error fetching booking', error });
+        res.status(500).json({ message: 'Error getting booking', error });
     }
 };
 
