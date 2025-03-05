@@ -39,7 +39,7 @@ const getBookingById = async (req, res) => {
     }
 };
 
-// Update booking status (e.g., from pending to confirmed)
+// Update booking status (pending to confirmed)
 const updateBookingStatus = async (req, res) => {
     try {
         const { status } = req.body;
