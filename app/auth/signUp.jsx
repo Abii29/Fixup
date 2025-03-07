@@ -45,13 +45,13 @@ export default function SignUp() {
 
       {/* SIGN UP BUTTON */}
       <TouchableOpacity style={styles.button}>
-        <Text style={styles.buttonText}>SIGN UP</Text>
+        <Text style={styles.buttonText}>Create Account</Text>
       </TouchableOpacity>
 
       {/* ALREADY HAVE AN ACCOUNT */}
       <TouchableOpacity onPress={() => router.push('/auth/signIn')}>
         <Text style={styles.loginText}>
-          Already have an account? <Text style={styles.loginLink}>Log in</Text>
+          Already have an account? <Text style={styles.loginLink}>SignIn</Text>
         </Text>
       </TouchableOpacity>
     </View>
