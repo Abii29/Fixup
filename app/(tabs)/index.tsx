@@ -3,7 +3,10 @@ import React from "react";
 import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
 
 export default function Index() {
-  const router= useRouter();
+
+const router=useRouter();
+
+
   
   return (
     <View style={styles.container}>
@@ -18,13 +21,15 @@ export default function Index() {
       <Text style={styles.subtitle}>The best app for your needs 🚀</Text>
 
       {/* GET STARTED BUTTON */}
-      <TouchableOpacity style={styles.button} onPress={() => alert("Get Started!")}>
+      <TouchableOpacity style={styles.button} 
+       onPress={() => router.push('/auth/signUp')}>
         <Text style={styles.buttonText}>GET STARTED</Text>
       </TouchableOpacity>
 
       {/* ALREADY HAVE AN ACCOUNT */}
-      <TouchableOpacity onPress={() => alert("Navigate to Login!")}>
-        <Text style={styles.loginText}>Already have an account? <Text style={styles.loginLink}>Log in</Text></Text>
+      <TouchableOpacity 
+      onPress={() => router.push('/auth/signIn')}>
+       <Text style={styles.loginText}>Already have an account? <Text style={styles.loginLink}>Log in</Text></Text>
       </TouchableOpacity>
     </View>
   );
