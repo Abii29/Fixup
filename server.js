@@ -7,6 +7,7 @@ const connectDB = require('./src/config/db');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 
+
 dotenv.config(); // Ensure environment variables are loaded
 const app = express();
 const server = http.createServer(app);
@@ -23,12 +24,12 @@ app.use(cors());
 app.use(express.json()); // Middleware to parse JSON requests
 
 io.on('connection', (socket) => {
-    console.log('A user connected:', socket.id);
+    console.log('User connected:', socket.id);
 
-    socket.on('sendMessage', async ({ senderId, receiverId, message }) => {
-        const chat = new Chat({ senderId, receiverId, message });
-        await chat.save();
-        io.emit('receiveMessage', chat); 
+    socket.on('sendNotification', async ({ userId, title, message, type }) => {
+        const notification = new Notification({ userId, title, message, type });
+        await notification.save();
+        io.emit(`receiveNotification-${userId}`, notification); // Send only to the specific user
     });
 
     socket.on('disconnect', () => {
@@ -36,11 +37,13 @@ io.on('connection', (socket) => {
     });
 });
 
+
 // Import Routes
 const authRoutes = require('./src/routes/authRoutes');
 const userRoutes = require('./src/routes/userRoutes');
 const serviceProviderRoutes = require('./src/routes/serviceProviderRoutes'); // Ensure correct path
 const bookingRoutes = require('./src/routes/bookingRoutes');
+const notificationRoutes = require('./src/routes/notificationRoutes');
 
 // Use Routes
 app.use('/api/auth', authRoutes);
@@ -48,6 +51,7 @@ app.use('/api/users', userRoutes);
 app.use('/api/providers', serviceProviderRoutes); //
 app.use('/api', bookingRoutes);
 app.use(bodyParser.json());
+app.use('/api/notifications', notificationRoutes);
 
 
 // Test route to check if the server is running
