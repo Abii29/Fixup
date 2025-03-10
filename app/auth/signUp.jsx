@@ -54,7 +54,7 @@ export default function SignUp() {
 
       <TouchableOpacity onPress={() => router.push('/auth/signIn')}>
         <Text style={styles.loginText}>
-          Already have an account? <Text style={styles.loginLink}>SignIn</Text>
+          Already have an account? <Text style={styles.loginLink}>Sign in</Text>
         </Text>
       </TouchableOpacity>
     </View>

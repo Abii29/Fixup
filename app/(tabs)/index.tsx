@@ -17,8 +17,7 @@ const router=useRouter();
       />
 
 
-      <Text style={styles.title}>Welcome to My App</Text>
-      <Text style={styles.subtitle}>The best app for your needs 🚀</Text>
+      <Text style={styles.title}>Welcome to Fix-Up</Text>
 
 
       <TouchableOpacity style={styles.button} 
@@ -65,7 +64,7 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
     paddingHorizontal: 40,
     borderRadius: 8,
-    marginTop: 20,
+    marginTop: 50,
   },
   buttonText: {
     fontSize: 18,
