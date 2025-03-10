@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { createUser, getUserProfile, updateUserProfile } = require('../controllers/userController');
-const authenticateToken = require('../middleware/authMiddleware'); // Renamed for clarity
+const authenticateToken = require('../middleware/authMiddleware'); // 
 
 
 // Route to create a new user (signup)

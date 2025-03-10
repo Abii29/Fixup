@@ -1,4 +1,5 @@
 const jwt = require('jsonwebtoken');
+const User = require('../models/User');
 
 const authenticateToken = (req, res, next) => {
     const token = req.header('Authorization');
@@ -15,7 +16,7 @@ const authenticateToken = (req, res, next) => {
 
         console.log("Token Decoded:", verified); // Debugging log
 
-        req.user = { user: verified.id }; // Ensuring correct ID mapping to match BookingController
+        req.user = { userId: verified.id }; // Ensuring correct ID mapping to match BookingController
 
         next();
     } catch (error) {
