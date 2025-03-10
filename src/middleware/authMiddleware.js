@@ -8,7 +8,7 @@ const authenticateToken = (req, res, next) => {
     }
 
     try {
-        console.log("🔍 Received Token:", token);  // Debugging log
+        console.log(" Received Token:", token);  // Debugging log
 
         const tokenWithoutBearer = token.replace("Bearer ", "");
         const verified = jwt.verify(tokenWithoutBearer, process.env.JWT_SECRET);
