@@ -59,6 +59,15 @@ app.get('/', (req, res) => {
     res.json({ message: 'API is running...' });
 });
 
+
+app.post('/api/notifications', (req, res) => {
+    // Handle the incoming notification here
+    const { userId, title, message, type } = req.body;
+    // Process the notification data
+    res.status(200).send({ message: "Notification sent successfully!" });
+});
+
+
 // Start the server
 const PORT = process.env.PORT || 5000;
 server.listen(PORT, () => {
