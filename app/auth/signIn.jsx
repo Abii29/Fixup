@@ -1,26 +1,34 @@
-import { useRouter } from "expo-router";
+import { useRouter, useNavigation } from "expo-router";
 import React, { useState } from "react";
 import { 
-  View, Text, TextInput, Image, StyleSheet, TouchableOpacity 
+  View, Text, TextInput, Image, StyleSheet, TouchableOpacity
 } from "react-native";
+import { useFocusEffect } from '@react-navigation/native';
 
 export default function SignIn() {
   const router = useRouter();
+  const navigation = useNavigation();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  useFocusEffect(
+    React.useCallback(() => {
+      navigation.setOptions({ headerShown: false });
+    }, [])
+  );
+
   return (
     <View style={styles.container}>
-      {/* LOGO */}
+      
       <Image 
         source={require("../../assets/images/loginimg.png")} 
         style={styles.logo} 
       />
 
-      {/* TITLE */}
+     
       <Text style={styles.title}>Welcome Back</Text>
 
-      {/* INPUT FIELDS */}
+
       <TextInput 
         style={styles.input} 
         placeholder="Email" 
@@ -36,12 +44,12 @@ export default function SignIn() {
         onChangeText={setPassword}
       />
 
-      {/* SIGN IN BUTTON */}
+
       <TouchableOpacity style={styles.button}>
         <Text style={styles.buttonText}>SIGN IN</Text>
       </TouchableOpacity>
 
-      {/* DON'T HAVE AN ACCOUNT? */}
+
       <TouchableOpacity onPress={() => router.push('/auth/signUp')}>
         <Text style={styles.registerText}>
           Don't have an account? <Text style={styles.registerLink}>Create New Account</Text>

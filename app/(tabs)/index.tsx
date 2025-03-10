@@ -10,23 +10,23 @@ const router=useRouter();
   
   return (
     <View style={styles.container}>
-      {/* IMAGE SECTION */}
+
       <Image 
         source={require("../../assets/images/loginimg.png")} 
         style={styles.image} 
       />
 
-      {/* TEXT SECTION */}
+
       <Text style={styles.title}>Welcome to My App</Text>
       <Text style={styles.subtitle}>The best app for your needs 🚀</Text>
 
-      {/* GET STARTED BUTTON */}
+
       <TouchableOpacity style={styles.button} 
        onPress={() => router.push('/auth/signUp')}>
         <Text style={styles.buttonText}>GET STARTED</Text>
       </TouchableOpacity>
 
-      {/* ALREADY HAVE AN ACCOUNT */}
+
       <TouchableOpacity 
       onPress={() => router.push('/auth/signIn')}>
        <Text style={styles.loginText}>Already have an account? <Text style={styles.loginLink}>Log in</Text></Text>
