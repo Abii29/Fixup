@@ -21,7 +21,7 @@ export default function SignIn() {
     <View style={styles.container}>
       
       <Image 
-        source={require("../../assets/images/loginimg.png")} 
+        source={require("../../assets/images/loginimg copy.png")} 
         style={styles.logo} 
       />
 
