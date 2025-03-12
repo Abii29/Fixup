@@ -3,6 +3,11 @@ const router = express.Router();
 const authMiddleware = require('../middleware/authMiddleware'); // Change the path to match the correct location
 const bookingController = require('../controllers/bookingController');
 
+
+
+
+
+
 // Route to create a booking
 router.post('/bookings', authMiddleware, bookingController.createBooking);
 

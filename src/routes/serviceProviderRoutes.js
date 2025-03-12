@@ -23,6 +23,6 @@ router.put('/profile', authenticateToken, updateProviderProfile);
 router.put('/availability', authenticateToken, updateAvailability);
 router.delete('/profile', authenticateToken, deleteProvider);
 router.get('/', authenticateToken, getAllProviders);
-router.get('/:id', authenticateToken, getProviderById); // ✅ Added authentication
+router.get('/:id', authenticateToken, getProviderById); 
 
 module.exports = router;
