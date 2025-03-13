@@ -3,8 +3,10 @@ const Notification = require('../models/notification');
 //Send a notification
 exports.sendNotification = async (req, res) => {
     try {
-        const { userId, title, message, type } = req.body;
 
+        console.log("Received request body:", req.body); // Debugging
+
+        const { userId, title, message, type } = req.body;
         if (!userId || !title || !message || !type) {
             return res.status(400).json({ message: "All fields are required." });
         }
@@ -14,6 +16,7 @@ exports.sendNotification = async (req, res) => {
 
         res.status(201).json({ message: "Notification sent successfully", notification });
     } catch (error) {
+        console.error("Error sending notification:", error);
         res.status(500).json({ message: "Error sending notification", error });
     }
 };

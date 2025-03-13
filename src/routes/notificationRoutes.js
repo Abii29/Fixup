@@ -2,10 +2,9 @@ const express = require('express');
 const router = express.Router();
 const authMiddleware = require('../middleware/authMiddleware'); 
 const notificationController = require('../controllers/notificationController');
-const Notification = require('../models/notification'); 
 
 // Send notification (Admins/Service Providers can send)
-router.post('/notifications', authMiddleware, notificationController.sendNotification);
+router.post('/', authMiddleware, notificationController.sendNotification);
 
 //Get all notifications for a user
 router.get('/notifications/:userId', authMiddleware, notificationController.getUserNotifications);

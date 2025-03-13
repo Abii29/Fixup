@@ -17,6 +17,7 @@ connectDB();
 
 // Middleware
 app.use(cors());
+app.use(bodyParser.json());
 app.use(express.json()); // Middleware to parse JSON requests
 
 
@@ -32,7 +33,6 @@ app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/providers', serviceProviderRoutes); //
 app.use('/api', bookingRoutes);
-app.use(bodyParser.json());
 app.use('/api/notifications', notificationRoutes);
 
 
