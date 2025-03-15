@@ -10,11 +10,6 @@ const app = express();
 const server = http.createServer(app);
 
 
-
-
-// Connect to MongoDB
-connectDB();
-
 // Middleware
 app.use(cors());
 app.use(bodyParser.json());
@@ -32,7 +27,7 @@ const notificationRoutes = require('./src/routes/notificationRoutes');
 app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/providers', serviceProviderRoutes); //
-app.use('/api', bookingRoutes);
+app.use('/api/bookings', bookingRoutes);
 app.use('/api/notifications', notificationRoutes);
 
 
@@ -42,7 +37,12 @@ app.get('/', (req, res) => {
 });
 
 
-  
+app.get('/api/bookings/test', (req, res) => {
+    res.json({ message: "Test route works!" });
+});
+
+// Connect to MongoDB
+connectDB();
 
 // Start the server
 const PORT = process.env.PORT || 5000;

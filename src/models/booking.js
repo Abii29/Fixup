@@ -26,16 +26,33 @@ const bookingSchema = new mongoose.Schema({
 
     status: {
         type: String,
-        enum: ['pending', 'confirmed', 'completed', 'canceled'],
+        enum: ['pending', 'confirmed', 'completed', 'cancelled'],
         default: 'pending'
     },
 
-    additionalDetails: {
-        type: String
+    paymentStatus: {
+        type: String,
+        enum: ['pending', 'paid', 'failed'],
+        default: 'pending'
+    },
+
+    additionalDetails: String,
+    address: {
+        type: String,
+        required: true
+    },
+
+    totalAmount: {
+        type: Number,
+        required: true
+    },
+
+    paymentMethod: {
+        type: String,
+        enum: ['cash', 'card'],
+        required: true
     }
 }, { timestamps: true });
 
 // Create the Booking model
-const Booking = mongoose.model('Booking', bookingSchema);
-
-module.exports = Booking;
+module.exports = mongoose.model('Booking', bookingSchema);

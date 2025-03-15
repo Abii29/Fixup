@@ -4,24 +4,23 @@ const authMiddleware = require('../middleware/authMiddleware'); // Change the pa
 const bookingController = require('../controllers/bookingController');
 
 
-
-
-
-
 // Route to create a booking
-router.post('/bookings', authMiddleware, bookingController.createBooking);
+router.post('/', bookingController.createBooking);
 
 // Route to get a booking by ID
-router.get('/bookings/:id', authMiddleware, bookingController.getBookingById);
+router.get('/:id', bookingController.getBookingById);
 
 // Route to update the booking status
-router.put('/bookings/:id/status', authMiddleware, bookingController.updateBookingStatus);
+router.put('/:id/status', bookingController.updateBookingStatus);
 
 // Route to get all bookings for a user
-router.get('/user/:userId/bookings', authMiddleware, bookingController.getBookingsForUser);
+router.get('/user/:userId', bookingController.getBookingsForUser);
+
+
+router.get('/', bookingController.getAllBookings);
 
 // Route to get all bookings for a service provider
-router.get('/provider/:providerId/bookings', authMiddleware, bookingController.getBookingsForServiceProvider);
+router.get('/provider/:providerId', bookingController.getBookingsForServiceProvider);
 
 module.exports = router;
 
