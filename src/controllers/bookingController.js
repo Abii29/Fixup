@@ -4,6 +4,7 @@ const Notification = require('../models/notification');
 // Create new booking
 const createBooking = async (req, res) => {
     console.log("Booking route reached");
+    console.log("Received Data:", req.body);
     try {
         const { user, serviceProvider, serviceType, bookingDate, additionalDetails,address, totalAmount, paymentMethod } = req.body;
 
@@ -19,7 +20,9 @@ const createBooking = async (req, res) => {
             additionalDetails,
             address,
             totalAmount,
-            paymentMethod
+            paymentMethod,
+            status: "pending", // Set default status
+            paymentStatus: "pending" // Set default payment status
         });
 
         await newBooking.save();
@@ -33,7 +36,10 @@ const createBooking = async (req, res) => {
 // booking ID
 const getBookingById = async (req, res) => {
     try {
-        const booking = await Booking.findById(req.params.id).populate('user serviceProvider');
+        const booking = await Booking.findById(req.params.id)
+            .populate('user serviceProvider')
+            .exec(); // Ensure proper execution
+
         if (!booking) {
             return res.status(404).json({ message: 'Booking not found' });
         }
@@ -56,7 +62,7 @@ const updateBookingStatus = async (req, res) => {
         }
 
         const updatedBooking = await Booking.findByIdAndUpdate(
-            req.params.id,
+            req.params.bookingId,
             { status, paymentStatus },
             { new: true }
         ).populate('user'); // Populate user details 
@@ -66,20 +72,26 @@ const updateBookingStatus = async (req, res) => {
         // Determine notification message and type
         let notificationMessage = "";
         let notificationType = "";
-
-        if (status === "confirmed") {
-            notificationMessage = `Your booking #${updatedBooking._id} has been confirmed.`;
-            notificationType = "order_accepted";
-        } else if (status === "ongoing") {
-            notificationMessage = `Your service is in progress.`;
-            notificationType = "order_ongoing";
-        } else if (status === "completed") {
-            notificationMessage = `Your booking #${updatedBooking._id} has been completed.`;
-            notificationType = "order_completed";
-        } else if (status === "cancelled") {
-            notificationMessage = `Your booking #${updatedBooking._id} has been cancelled.`;
-            notificationType = "order_cancelled";
+ 
+        switch (status) {
+            case "confirmed":
+                notificationMessage = `Your booking #${updatedBooking._id} has been confirmed.`;
+                notificationType = "order_accepted";
+                break;
+            case "ongoing":
+                notificationMessage = `Your service is in progress.`;
+                notificationType = "order_ongoing";
+                break;
+            case "completed":
+                notificationMessage = `Your booking #${updatedBooking._id} has been completed.`;
+                notificationType = "order_completed";
+                break;
+            case "cancelled":
+                notificationMessage = `Your booking #${updatedBooking._id} has been cancelled.`;
+                notificationType = "order_cancelled";
+                break;
         }
+
 
         
        // Send notification to the user
@@ -92,9 +104,10 @@ const updateBookingStatus = async (req, res) => {
         }).save();
     }
 
+    console.log("[BookingController] Booking Status Updated Successfully");
     res.status(200).json({ message: 'Booking status updated successfully', updatedBooking });
 } catch (error) {
-    console.error("Error updating booking:", error);
+    console.error("[BookingController] Error updating booking:", error);
     res.status(500).json({ message: 'Error updating booking', error: error.message });
 }
 };
@@ -120,7 +133,7 @@ const getBookingsForUser = async (req, res) => {
 // Get all bookings for a specific service provider
 const getBookingsForServiceProvider = async (req, res) => {
     try {
-        const bookings = await Booking.find({ serviceProvider: req.params.providerId }).populate('user');
+        const bookings = await Booking.find({ serviceProvider: req.params.providerId }).populate('user').exec();
         if (!bookings || bookings.length === 0) {
             return res.status(404).json({ message: 'No bookings found for this provider' });
         }
@@ -135,7 +148,7 @@ const getBookingsForServiceProvider = async (req, res) => {
 
 // Get all bookings
 const getAllBookings = async (req, res) => {
-    console.log("getAllBookings route hit!");
+    console.log("[BookingController] Fetching All Bookings");
     try {
         const bookings = await Booking.find().populate('user serviceProvider');
         if (!bookings || bookings.length === 0) {
@@ -143,7 +156,7 @@ const getAllBookings = async (req, res) => {
         }
         res.status(200).json(bookings);
     } catch (error) {
-        console.error("Error fetching bookings:", error);
+        console.error("[BookingController] Error fetching bookings:", error);
         res.status(500).json({ message: 'Error fetching bookings', error: error.message });
     }
 };
