@@ -1,57 +1,43 @@
-import { useRouter } from "expo-router";
+import { auth, db } from "../config/firebaseConfig";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { setDoc, doc } from "firebase/firestore";
-import { auth, db } from "firebaseConfig"; // ✅ Ensure correct path
 import React, { useState } from "react";
-import { 
-  View, Text, TextInput, Image, StyleSheet, TouchableOpacity 
-} from "react-native";
+import { View, Text, TextInput, Image, StyleSheet, TouchableOpacity } from "react-native";
 
-export default function SignUp() {
-  const router = useRouter();
-  const [fullName, setFullName] = useState("");  // Fixed typo
+export default function signUp() {
+  const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const CreateNewAccount = () => {
-    createUserWithEmailAndPassword(auth, email, password)
-      .then(async (resp) => {
-        const user = resp.user;
-        console.log("User created:", user);
-        await SaveUser(user);
-      })
-      .catch((e) => {
-        console.error("Signup Error:", e.message);
-      });
+  const CreateNewAccount = async () => {
+    try {
+      const resp = await createUserWithEmailAndPassword(auth, email, password);
+      const user = resp.user;
+      console.log(user);
+      await SaveUser(user);
+    } catch (error) {
+      console.log("Error:", error.message);
+    }
   };
 
   const SaveUser = async (user) => {
-    try {
-      await setDoc(doc(db, "users", email), {
-        name: fullName,
-        email: email,
-        member: false,
-        uid: user.uid,
-      });
-      console.log("User data saved to Firestore");
-    } catch (error) {
-      console.error("Firestore Error:", error);
-    }
+    await setDoc(doc(db, "users", email), {
+      name: fullName,
+      email: email,
+      member: false,
+      uid: user?.uid,
+    });
   };
 
   return (
     <View style={styles.container}>
-      <Image 
-        source={require("../../assets/images/loginimg copy.png")} 
-        style={styles.logo} 
-      />
-
+      <Image source={require("../../assets/images/loginimg copy.png")} style={styles.logo} />
       <Text style={styles.title}>Create New Account</Text>
 
       <TextInput 
         style={styles.input} 
         placeholder="Full Name" 
-        value={fullName}  // Fixed name variable
+        value={fullName} 
         onChangeText={setFullName} 
       />
       <TextInput 
@@ -59,24 +45,18 @@ export default function SignUp() {
         placeholder="Email" 
         keyboardType="email-address"
         value={email} 
-        onChangeText={setEmail}
+        onChangeText={setEmail} 
       />
       <TextInput 
         style={styles.input} 
         placeholder="Password" 
         secureTextEntry 
         value={password} 
-        onChangeText={setPassword}
+        onChangeText={setPassword} 
       />
 
       <TouchableOpacity style={styles.button} onPress={CreateNewAccount}>
         <Text style={styles.buttonText}>Create Account</Text>
-      </TouchableOpacity>
-
-      <TouchableOpacity onPress={() => router.push('/auth/signIn')}>
-        <Text style={styles.loginText}>
-          Already have an account? <Text style={styles.loginLink}>Sign in</Text>
-        </Text>
       </TouchableOpacity>
     </View>
   );
@@ -126,13 +106,4 @@ const styles = StyleSheet.create({
     color: "#fff",
     fontWeight: "bold",
   },
-  loginText: {
-    fontSize: 16,
-    color: "#666",
-    marginTop: 15,
-  },
-  loginLink: {
-    color: "#007AFF",
-    fontWeight: "bold",
-  }
 });
