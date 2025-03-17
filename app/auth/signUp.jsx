@@ -1,4 +1,7 @@
 import { useRouter } from "expo-router";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { setDoc, doc } from "firebase/firestore";
+import { auth, db } from "firebaseConfig"; // ✅ Ensure correct path
 import React, { useState } from "react";
 import { 
   View, Text, TextInput, Image, StyleSheet, TouchableOpacity 
@@ -6,27 +9,50 @@ import {
 
 export default function SignUp() {
   const router = useRouter();
-  const [name, setName] = useState("");
+  const [fullName, setFullName] = useState("");  // Fixed typo
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  const CreateNewAccount = () => {
+    createUserWithEmailAndPassword(auth, email, password)
+      .then(async (resp) => {
+        const user = resp.user;
+        console.log("User created:", user);
+        await SaveUser(user);
+      })
+      .catch((e) => {
+        console.error("Signup Error:", e.message);
+      });
+  };
+
+  const SaveUser = async (user) => {
+    try {
+      await setDoc(doc(db, "users", email), {
+        name: fullName,
+        email: email,
+        member: false,
+        uid: user.uid,
+      });
+      console.log("User data saved to Firestore");
+    } catch (error) {
+      console.error("Firestore Error:", error);
+    }
+  };
+
   return (
     <View style={styles.container}>
-      {/* LOGO */}
       <Image 
         source={require("../../assets/images/loginimg copy.png")} 
         style={styles.logo} 
       />
 
-      {/* TITLE */}
       <Text style={styles.title}>Create New Account</Text>
 
-      {/* INPUT FIELDS */}
       <TextInput 
         style={styles.input} 
         placeholder="Full Name" 
-        value={name} 
-        onChangeText={setName}
+        value={fullName}  // Fixed name variable
+        onChangeText={setFullName} 
       />
       <TextInput 
         style={styles.input} 
@@ -43,11 +69,9 @@ export default function SignUp() {
         onChangeText={setPassword}
       />
 
-
-      <TouchableOpacity style={styles.button}>
+      <TouchableOpacity style={styles.button} onPress={CreateNewAccount}>
         <Text style={styles.buttonText}>Create Account</Text>
       </TouchableOpacity>
-
 
       <TouchableOpacity onPress={() => router.push('/auth/signIn')}>
         <Text style={styles.loginText}>
