@@ -71,14 +71,14 @@ const getProviderProfile = async (req, res) => {
         const provider = await ServiceProvider.findById(req.user.userId);
 
         if (!provider) {
-            console.log("⚠️ Provider not found in DB");
+            console.log("Provider not found in DB");
             return res.status(404).json({ message: "Provider not found" });
         }
 
-        console.log("✅ Provider Found:", provider);
+        console.log(" Provider Found:", provider);
         res.json(provider);
     } catch (error) {
-        console.error("❌ Error fetching profile:", error.message);
+        console.error(" Error fetching profile:", error.message);
         res.status(500).json({ message: "Server error", error: error.message });
     }
 };
@@ -101,7 +101,7 @@ const deleteProvider = async (req, res) => {
     }
 };
 
-// ✅ Get all service providers (Fixed incorrect model reference)
+//  Get all service providers (Fixed incorrect model reference)
 const getAllProviders = async (req, res) => {
     try {
         const providers = await ServiceProvider.find();
@@ -111,7 +111,7 @@ const getAllProviders = async (req, res) => {
     }
 };
 
-// ✅ Get a provider by ID (Fixed incorrect model reference)
+//  Get a provider by ID (Fixed incorrect model reference)
 const getProviderById = async (req, res) => {
     try {
         const providerId = req.params.id.trim(); // Remove any extra spaces
