@@ -1,13 +1,19 @@
 import { auth, db } from "../config/firebaseConfig";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { setDoc, doc } from "firebase/firestore";
-import React, { useState } from "react";
-import { View, Text, TextInput, Image, StyleSheet, TouchableOpacity } from "react-native";
+import React, { useState, useContext } from "react";
+import { useRouter } from "expo-router";
+import { 
+  View, Text, TextInput, Image, StyleSheet, TouchableOpacity 
+} from "react-native";
+import { UserDetailContext } from "../context/UserDetailContext"; 
 
-export default function signUp() {
+export default function SignUp() {
+  const router = useRouter();
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const { setUserDetail } = useContext(UserDetailContext); 
 
   const CreateNewAccount = async () => {
     try {
@@ -21,12 +27,16 @@ export default function signUp() {
   };
 
   const SaveUser = async (user) => {
-    await setDoc(doc(db, "users", email), {
+    const data = {
       name: fullName,
       email: email,
       member: false,
       uid: user?.uid,
-    });
+    };
+
+    await setDoc(doc(db, "users", email), data);
+
+    setUserDetail(data); 
   };
 
   return (
@@ -57,6 +67,12 @@ export default function signUp() {
 
       <TouchableOpacity style={styles.button} onPress={CreateNewAccount}>
         <Text style={styles.buttonText}>Create Account</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity onPress={() => router.push('/auth/signIn')}>
+        <Text style={styles.registerText}>
+          Already have an account? <Text style={styles.registerLink}>Sign in Here</Text>
+        </Text>
       </TouchableOpacity>
     </View>
   );
@@ -106,4 +122,13 @@ const styles = StyleSheet.create({
     color: "#fff",
     fontWeight: "bold",
   },
+  registerText: {
+    fontSize: 16,
+    color: "#666",
+    marginTop: 15,
+  },
+  registerLink: {
+    color: "#007AFF",
+    fontWeight: "bold",
+  }
 });

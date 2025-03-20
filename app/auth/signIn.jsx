@@ -4,13 +4,20 @@ import {
   View, Text, TextInput, Image, StyleSheet, TouchableOpacity
 } from "react-native";
 import { useFocusEffect } from '@react-navigation/native';
-
+import {auth} from '../config/firebaseConfig'
 export default function SignIn() {
   const router = useRouter();
   const navigation = useNavigation();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  const onSignInClick=()=>{
+    SignInWithEmailAndPassword(auth, email,password)
+    .then(resp=>{
+      const user=resp.user
+      console.log(user)
+    })
+  }
   useFocusEffect(
     React.useCallback(() => {
       navigation.setOptions({ headerShown: false });
@@ -46,6 +53,7 @@ export default function SignIn() {
 
 
       <TouchableOpacity style={styles.button}>
+        onPress={onSignInClick}
         <Text style={styles.buttonText}>SIGN IN</Text>
       </TouchableOpacity>
 
