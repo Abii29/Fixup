@@ -1,7 +1,7 @@
 import { useRouter, useNavigation } from "expo-router";
 import React, { useState } from "react";
 import { 
-  View, Text, TextInput, Image, StyleSheet, TouchableOpacity
+  View, Text, TextInput, Image, StyleSheet, TouchableOpacity, ToastAndroid
 } from "react-native";
 import { useFocusEffect } from '@react-navigation/native';
 import {auth} from '../config/firebaseConfig'
@@ -16,6 +16,10 @@ export default function SignIn() {
     .then(resp=>{
       const user=resp.user
       console.log(user)
+    }).catch(e=>{
+      console.log(e)
+      ToastAndroid.show('Incorrect Email & Password', ToastAndroid.BOTTOM)
+
     })
   }
   useFocusEffect(
