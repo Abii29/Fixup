@@ -8,4 +8,4 @@ admin.initializeApp({
   credential: admin.credential.cert(serviceAccount), 
 });
 
-console.log('Firebase Admin SDK Initialized');
+console.log('Firebase to Admin SDK Initialized');
