@@ -1,36 +1,64 @@
-import React, { useState } from "react";
-import { View, Text, TextInput, StyleSheet, TouchableOpacity } from "react-native";
+import React, { useState, useRef } from "react";
+import { View, Text, TextInput, Image, StyleSheet, TouchableOpacity } from "react-native";
 import { useRouter } from "expo-router";
 
-export default function OTP() {
-  const [otp, setOtp] = useState("");  // State for OTP input
+export default function OTPVerification() {
   const router = useRouter();
+  const [otp, setOtp] = useState(["", "", "", ""]);
+  const inputRefs = useRef([]);
 
-  // Mock function to verify OTP (you should replace this with backend logic)
-  const verifyOTP = () => {
-    if (otp.length === 6) {
-      router.push("/auth/landingPage");  // Navigate to the landing page if OTP is correct
-    } else {
-      alert("Please enter a valid OTP");
+  const handleChange = (text, index) => {
+    if (text.length > 1) return; // Ensure only one digit per input
+    const newOtp = [...otp];
+    newOtp[index] = text;
+    setOtp(newOtp);
+
+    // Move to next input box if digit is entered
+    if (text && index < 3) {
+      inputRefs.current[index + 1].focus();
     }
+
+    // Auto-submit when 4 digits are entered
+    if (newOtp.join("").length === 4) {
+      handleVerify(newOtp.join(""));
+    }
+  };
+
+  const handleVerify = (enteredOtp) => {
+    console.log("Entered OTP:", enteredOtp);
+    // Navigate to the next screen after successful OTP entry
+    router.push("/home"); // Change this route as per your app structure
   };
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Enter OTP</Text>
-      <Text style={styles.subtitle}>Please enter the 6-digit code sent to your mobile number</Text>
+      <Image source={require("../../assets/images/loginimg copy.png")} style={styles.logo} />
+      <Text style={styles.title}>Verify Your Account</Text>
+      <Text style={styles.subtitle}>Enter the 4-digit OTP sent to your phone</Text>
 
-      <TextInput 
-        style={styles.input} 
-        placeholder="Enter OTP" 
-        keyboardType="number-pad"
-        maxLength={6}
-        value={otp} 
-        onChangeText={setOtp} 
-      />
+      <View style={styles.otpContainer}>
+        {otp.map((value, index) => (
+          <TextInput
+            key={index}
+            ref={(el) => (inputRefs.current[index] = el)}
+            style={styles.otpInput}
+            keyboardType="numeric"
+            maxLength={1}
+            value={value}
+            onChangeText={(text) => handleChange(text, index)}
+            autoFocus={index === 0}
+          />
+        ))}
+      </View>
 
-      <TouchableOpacity style={styles.button} onPress={verifyOTP}>
-        <Text style={styles.buttonText}>Verify OTP</Text>
+      <TouchableOpacity style={styles.button} onPress={() => handleVerify(otp.join(""))}>
+        <Text style={styles.buttonText}>Verify</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity onPress={() => console.log("Resend OTP")}>
+        <Text style={styles.registerText}>
+          Didn't receive a code? <Text style={styles.registerLink}>Resend OTP</Text>
+        </Text>
       </TouchableOpacity>
     </View>
   );
@@ -44,6 +72,12 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     padding: 20,
   },
+  logo: {
+    width: 100,
+    height: 100,
+    resizeMode: "contain",
+    marginBottom: 20,
+  },
   title: {
     fontSize: 22,
     fontWeight: "bold",
@@ -53,24 +87,31 @@ const styles = StyleSheet.create({
   subtitle: {
     fontSize: 16,
     color: "#666",
+    textAlign: "center",
     marginBottom: 20,
   },
-  input: {
-    width: "100%",
+  otpContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    width: "80%",
+    marginBottom: 20,
+  },
+  otpInput: {
+    width: 50,
     height: 50,
-    borderColor: "#ccc",
-    borderWidth: 1,
-    borderRadius: 8,
-    paddingHorizontal: 15,
-    marginBottom: 15,
-    fontSize: 16,
+    borderBottomWidth: 2,
+    borderColor: "#007AFF",
+    fontSize: 22,
+    textAlign: "center",
+    fontWeight: "bold",
+    color: "#333",
   },
   button: {
     backgroundColor: "#007AFF",
     paddingVertical: 12,
     paddingHorizontal: 40,
     borderRadius: 8,
-    marginTop: 10,
+    marginTop: 20,
     width: "100%",
     alignItems: "center",
   },
@@ -78,5 +119,15 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: "#fff",
     fontWeight: "bold",
-  }
+  },
+  registerText: {
+    fontSize: 16,
+    color: "#666",
+    marginTop: 15,
+  },
+  registerLink: {
+    color: "#007AFF",
+    fontWeight: "bold",
+  },
 });
+

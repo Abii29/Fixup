@@ -1,22 +1,68 @@
 import React, { useState } from "react";
-import { useRouter } from "expo-router"; // Correct useRouter import from expo-router
+import { useRouter } from "expo-router";
 import { View, Text, TextInput, Image, StyleSheet, TouchableOpacity } from "react-native";
 
 export default function SignUp() {
-  const router = useRouter(); // This should work properly now
+  const router = useRouter();
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [mobileNumber, setMobileNumber] = useState("");
+  const [contactInfo, setContactInfo] = useState("");
+  const [location, setLocation] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState(""); // State to hold error message
+
+  // Function to handle form submission
+  const handleSignUp = async () => {
+    if (!fullName || !email || !password || !contactInfo || !location) {
+      setErrorMessage("All fields are required.");
+      return;
+    }
+
+    setLoading(true);
+    setErrorMessage(""); // Clear any previous errors
+
+    try {
+      const response = await fetch('http://192.168.158.2:5000/api/auth/signup', {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: fullName,
+          email: email,
+          password: password,
+          contactInfo: contactInfo,
+          location: location,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        // If registration is successful, redirect to the OTP page or login page
+        router.push("/auth/otp"); // Change this to redirect to the next page as per your flow
+      } else {
+        // If there was an error, display the error message
+        setErrorMessage(data.message || "Something went wrong!");
+      }
+    } catch (error) {
+      setErrorMessage("Network error, please try again later.");
+      console.error("Signup Error:", error);
+    } finally {
+      setLoading(false); // Set loading to false when done
+    }
+  };
 
   return (
     <View style={styles.container}>
       <Image source={require("../../assets/images/loginimg copy.png")} style={styles.logo} />
       <Text style={styles.title}>Create New Account</Text>
 
+      {/* Input fields */}
       <TextInput
         style={styles.input}
-        placeholder="Full Name" 
+        placeholder="Full Name"
         value={fullName}
         onChangeText={setFullName}
       />
@@ -36,19 +82,27 @@ export default function SignUp() {
       />
       <TextInput
         style={styles.input}
-        placeholder="Mobile Number"
+        placeholder="Contact Info"
         keyboardType="phone-pad"
-        value={mobileNumber}
-        onChangeText={setMobileNumber}
+        value={contactInfo}
+        onChangeText={setContactInfo}
+      />
+      <TextInput
+        style={styles.input}
+        placeholder="Location"
+        value={location}
+        onChangeText={setLocation}
       />
 
-      <TouchableOpacity
-        style={styles.button}
-        onPress={() => router.push("/auth/otp")} // Make sure you have the correct route for OTP page
-      >
-        <Text style={styles.buttonText}>Create Account</Text>
+      {/* Error message */}
+      {errorMessage ? <Text style={styles.errorText}>{errorMessage}</Text> : null}
+
+      {/* Submit button */}
+      <TouchableOpacity style={styles.button} onPress={handleSignUp} disabled={loading}>
+        <Text style={styles.buttonText}>{loading ? "Creating..." : "Create Account"}</Text>
       </TouchableOpacity>
 
+      {/* Redirect to Sign In */}
       <TouchableOpacity onPress={() => router.push("/auth/signIn")}>
         <Text style={styles.registerText}>
           Already have an account? <Text style={styles.registerLink}>Sign in Here</Text>
@@ -110,5 +164,10 @@ const styles = StyleSheet.create({
   registerLink: {
     color: "#007AFF",
     fontWeight: "bold",
+  },
+  errorText: {
+    color: "red",
+    marginBottom: 15,
+    fontSize: 14,
   },
 });
