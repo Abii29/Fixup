@@ -10,9 +10,8 @@ export default function SignUp() {
   const [contactInfo, setContactInfo] = useState("");
   const [location, setLocation] = useState("");
   const [loading, setLoading] = useState(false);
-  const [errorMessage, setErrorMessage] = useState(""); // State to hold error message
+  const [errorMessage, setErrorMessage] = useState(""); 
 
-  // Function to handle form submission
   const handleSignUp = async () => {
     if (!fullName || !email || !password || !contactInfo || !location) {
       setErrorMessage("All fields are required.");
@@ -20,7 +19,7 @@ export default function SignUp() {
     }
 
     setLoading(true);
-    setErrorMessage(""); // Clear any previous errors
+    setErrorMessage(""); 
 
     try {
       const response = await fetch('http://192.168.158.2:5000/api/auth/signup', {
@@ -40,17 +39,17 @@ export default function SignUp() {
       const data = await response.json();
 
       if (response.ok) {
-        // If registration is successful, redirect to the OTP page or login page
-        router.push("/auth/otp"); // Change this to redirect to the next page as per your flow
+  
+        router.push("/auth/otp"); 
       } else {
-        // If there was an error, display the error message
+ 
         setErrorMessage(data.message || "Something went wrong!");
       }
     } catch (error) {
       setErrorMessage("Network error, please try again later.");
       console.error("Signup Error:", error);
     } finally {
-      setLoading(false); // Set loading to false when done
+      setLoading(false);
     }
   };
 

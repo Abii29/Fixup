@@ -28,7 +28,6 @@ const router=useRouter();
 
       <TouchableOpacity 
       onPress={() => router.push('./auth/signIn')}>
-       <Text style={styles.loginText}>Already have an account? <Text style={styles.loginLink}>Log in</Text></Text>
       </TouchableOpacity>
     </View>
   );

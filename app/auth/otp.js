@@ -8,17 +8,16 @@ export default function OTPVerification() {
   const inputRefs = useRef([]);
 
   const handleChange = (text, index) => {
-    if (text.length > 1) return; // Ensure only one digit per input
+    if (text.length > 1) return; 
     const newOtp = [...otp];
     newOtp[index] = text;
     setOtp(newOtp);
 
-    // Move to next input box if digit is entered
     if (text && index < 3) {
       inputRefs.current[index + 1].focus();
     }
 
-    // Auto-submit when 4 digits are entered
+   
     if (newOtp.join("").length === 4) {
       handleVerify(newOtp.join(""));
     }
@@ -26,8 +25,8 @@ export default function OTPVerification() {
 
   const handleVerify = (enteredOtp) => {
     console.log("Entered OTP:", enteredOtp);
-    // Navigate to the next screen after successful OTP entry
-    router.push("/home"); // Change this route as per your app structure
+
+    router.push("/home"); 
   };
 
   return (

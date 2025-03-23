@@ -1,15 +1,17 @@
 import { useRouter, useNavigation } from "expo-router";
 import React, { useState } from "react";
 import { 
-  View, Text, TextInput, Image, StyleSheet, TouchableOpacity
+  View, Text, TextInput, Image, StyleSheet, TouchableOpacity, ActivityIndicator 
 } from "react-native";
-import { useFocusEffect } from '@react-navigation/native';
+import { useFocusEffect } from "@react-navigation/native";
 
 export default function SignIn() {
   const router = useRouter();
   const navigation = useNavigation();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   useFocusEffect(
     React.useCallback(() => {
@@ -17,9 +19,41 @@ export default function SignIn() {
     }, [])
   );
 
+  const handleSignIn = async () => {
+    if (!email || !password) {
+      setErrorMessage("Email and password are required.");
+      return;
+    }
+
+    setLoading(true);
+    setErrorMessage("");
+
+    try {
+      const response = await fetch("http://192.168.158.2:5000/api/auth/signin", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, password }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        router.push("/home"); // Redirect to the home screen after login
+      } else {
+        setErrorMessage(data.message || "Invalid email or password");
+      }
+    } catch (error) {
+      setErrorMessage("Network error, please try again later.");
+      console.error("SignIn Error:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <View style={styles.container}>
-      
       <Image 
         source={require("../../assets/images/loginimg copy.png")} 
         style={styles.logo} 
@@ -42,11 +76,17 @@ export default function SignIn() {
         onChangeText={setPassword}
       />
 
-      <TouchableOpacity style={styles.button}>
-        <Text style={styles.buttonText}>SIGN IN</Text>
+      {errorMessage ? <Text style={styles.errorText}>{errorMessage}</Text> : null}
+
+      <TouchableOpacity style={styles.button} onPress={handleSignIn} disabled={loading}>
+        {loading ? (
+          <ActivityIndicator color="#fff" />
+        ) : (
+          <Text style={styles.buttonText}>SIGN IN</Text>
+        )}
       </TouchableOpacity>
 
-      <TouchableOpacity onPress={() => router.push('/auth/signUp')}>
+      <TouchableOpacity onPress={() => router.push("/auth/signUp")}>
         <Text style={styles.registerText}>
           Don't have an account? <Text style={styles.registerLink}>Create New Account</Text>
         </Text>
@@ -107,5 +147,10 @@ const styles = StyleSheet.create({
   registerLink: {
     color: "#007AFF",
     fontWeight: "bold",
-  }
+  },
+  errorText: {
+    color: "red",
+    marginBottom: 15,
+    fontSize: 14,
+  },
 });
