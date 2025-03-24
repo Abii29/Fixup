@@ -340,7 +340,7 @@ const ProfileScreen = () => {
         </TouchableOpacity>
 
         <TouchableOpacity
-          onPress={() => navigation.push("contactUs/contactUsScreen")}
+          // onPress={() => navigation.push("contactUs/contactUsScreen")}
           style={{
             flexDirection: isRtl ? "row-reverse" : "row",
             alignItems: "center",

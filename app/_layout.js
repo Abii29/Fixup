@@ -28,12 +28,6 @@ const MainNavigation = () => {
         name="onboarding/onboardingScreen"
         options={{ gestureEnabled: false }}
       />
-      <Stack.Screen
-        name="auth/loginScreen"
-        options={{ gestureEnabled: false }}
-      />
-      <Stack.Screen name="auth/registerScreen" />
-      <Stack.Screen name="auth/verificationScreen" />
       <Stack.Screen name="(tabs)" options={{ gestureEnabled: false }} />
       <Stack.Screen name="bestOffer/bestOfferScreen" />
       <Stack.Screen name="topServices/topServicesScreen" />
@@ -41,27 +35,16 @@ const MainNavigation = () => {
       <Stack.Screen name="details/detailsScreen" />
       <Stack.Screen name="confirm/confirmScreen" />
       <Stack.Screen name="paymentMethod/paymentMethodScreen" />
-      <Stack.Screen name="creditCard/creditCardScreen" />
-      <Stack.Screen name="googlePay/googlePayScreen" />
-      <Stack.Screen name="payPal/payPalScreen" />
       <Stack.Screen
         name="success/successScreen"
         options={{ gestureEnabled: false }}
       />
       <Stack.Screen name="search/searchScreen" />
       <Stack.Screen name="notification/notificationScreen" />
-      <Stack.Screen name="review/reviewScreen" />
       <Stack.Screen name="pickAddress/pickAddressScreen" />
-      <Stack.Screen name="chat/chatScreen" />
       <Stack.Screen name="editProfile/editProfileScreen" />
       <Stack.Screen name="booking/bookingScreen" />
-      <Stack.Screen name="termsCondition/termsConditionScreen" />
-      <Stack.Screen name="privacyPolicy/privacyPolicyScreen" />
-      <Stack.Screen name="fAQs/fAQsScreen" />
-      <Stack.Screen name="contactUs/contactUsScreen" />
-      <Stack.Screen name="appSetting/appSettingScreen" />
-      <Stack.Screen name="favorite/favoriteScreen" />
-      <Stack.Screen name="referAndEarn/referAndEarnScreen" />
+      {/* <Stack.Screen name="contactUs/contactUsScreen" /> */}
       <Stack.Screen name="language/languageScreen" />
     </Stack>
   );

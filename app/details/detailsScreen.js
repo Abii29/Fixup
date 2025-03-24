@@ -251,9 +251,7 @@ const DetailsScreen = () => {
           >
             {tr("serviceReview")}
           </Text>
-          <TouchableOpacity
-            onPress={() => navigation.push("review/reviewScreen")}
-          >
+          <TouchableOpacity>
             <Text
               numberOfLines={1}
               style={{ maxWidth: 100, ...Fonts.SemiBold14primary }}

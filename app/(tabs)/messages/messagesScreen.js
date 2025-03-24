@@ -121,12 +121,6 @@ const MessagesScreen = () => {
         }}
       >
         <TouchableOpacity
-          onPress={() =>
-            navigation.push("chat/chatScreen", {
-              image: item.image,
-              name: item.title,
-            })
-          }
           style={{
             flexDirection: isRtl ? "row-reverse" : "row",
             justifyContent: "center",
