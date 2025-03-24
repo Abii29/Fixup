@@ -24,10 +24,7 @@ const MainNavigation = () => {
   return (
     <Stack screenOptions={{ headerShown: false, animation: "ios_from_right" }}>
       <Stack.Screen name="index" />
-      <Stack.Screen
-        name="onboarding/onboardingScreen"
-        options={{ gestureEnabled: false }}
-      />
+      <Stack.Screen name="onboarding/onboardingScreen" options={{ gestureEnabled: false }} />
       <Stack.Screen name="(tabs)" options={{ gestureEnabled: false }} />
       <Stack.Screen name="bestOffer/bestOfferScreen" />
       <Stack.Screen name="topServices/topServicesScreen" />
@@ -35,17 +32,9 @@ const MainNavigation = () => {
       <Stack.Screen name="details/detailsScreen" />
       <Stack.Screen name="confirm/confirmScreen" />
       <Stack.Screen name="paymentMethod/paymentMethodScreen" />
-      <Stack.Screen
-        name="success/successScreen"
-        options={{ gestureEnabled: false }}
-      />
-      <Stack.Screen name="search/searchScreen" />
-      <Stack.Screen name="notification/notificationScreen" />
-      <Stack.Screen name="pickAddress/pickAddressScreen" />
+      <Stack.Screen name="success/successScreen" options={{ gestureEnabled: false }} />
       <Stack.Screen name="editProfile/editProfileScreen" />
       <Stack.Screen name="booking/bookingScreen" />
-      {/* <Stack.Screen name="contactUs/contactUsScreen" /> */}
-      <Stack.Screen name="language/languageScreen" />
     </Stack>
   );
 };

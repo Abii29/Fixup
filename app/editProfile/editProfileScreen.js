@@ -34,9 +34,9 @@ const EditProfileScreen = () => {
 
   const [update, setUpdate] = useState(false);
 
-  const [name, onChangeName] = useState("Esther howard");
-  const [email, onChangeTextEmail] = useState("estherhoward@example.com");
-  const [number, onChangeTextNumber] = useState("9876543210");
+  const [name, onChangeName] = useState("Praneeth Perera");
+  const [email, onChangeTextEmail] = useState("praneeth.20231203@iit.ac.lk");
+  const [number, onChangeTextNumber] = useState("071 429 2156");
 
   const [uploadImage, setUploadImage] = useState(false);
   const toggleCloseUploadImage = () => {

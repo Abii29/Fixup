@@ -405,7 +405,6 @@ const ConfirmScreen = () => {
           </Text>
           <TouchableOpacity
             activeOpacity={0.9}
-            onPress={() => navigation.push("pickAddress/pickAddressScreen")}
             style={{
               flexDirection: isRtl ? "row-reverse" : "row",
               alignItems: "center",

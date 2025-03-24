@@ -368,7 +368,6 @@ const HomeScreen = () => {
           </View>
 
           <TouchableOpacity
-            onPress={() => navigation.push("notification/notificationScreen")}
             style={{
               paddingHorizontal: Default.fixPadding * 2,
             }}
@@ -382,7 +381,6 @@ const HomeScreen = () => {
         </View>
         <TouchableOpacity
           activeOpacity={0.9}
-          onPress={() => navigation.push("search/searchScreen")}
           style={{
             flexDirection: isRtl ? "row-reverse" : "row",
             alignItems: "center",

@@ -4,27 +4,6 @@
         "getStarted": "Get started",
         "exitApp": "Tap back again to exit the App"
     },
-    "loginScreen": {
-        "login": "Login",
-        "pleaseConfirm": "Please confirm your country code and enter your mobile number ",
-        "enterNumber": "Enter your mobile number",
-        "orLogin": "Or Login using",
-        "exitApp": "Tap back again to exit the App",
-        "search": "Search",
-        "close": "Close"
-    },
-    "registerScreen": {
-        "register": "Register",
-        "pleaseCreate": "Please create your account to continue associated with us.",
-        "enterName": "Enter your name",
-        "enterEmail": "Enter your email id",
-        "enterNumber": "Enter your mobile number"
-    },
-    "verificationScreen": {
-        "verification": "OTP verification",
-        "pleaseEnter": "Otp has been sent to you on your mobile number please enter it below ",
-        "verify": "Verify"
-    },
     "loader": {
         "pleaseWait": "Please wait"
     },
@@ -112,52 +91,11 @@
         "total": "Total",
         "payment": "Go Forward with Payment"
     },
-    "creditCardScreen": {
-        "mastercard": "Mastercard",
-        "name": "Card holder name",
-        "cardNo": "Card Number",
-        "enterName": "Enter your card holder name",
-        "enterCard": "Enter your card number",
-        "expiryDate": "Expiry date",
-        "enterCvv": "code",
-        "payment": "Payment"
-
-    },
-    "googlePayScreen": {
-        "googlePay": "Google pay",
-        "payWith": "Pay with google pay",
-        "enter": "Enter UPI Id",
-        "payment": "Payment"
-
-    },
-    "payPalScreen": {
-        "enterEmail": "Enter email id",
-        "payment": "Payment",
-        "payPal": "PayPal"
-
-
-    },
     "successScreen": {
         "paymentSuccessful": "Payment successful!",
         "description": "Your order has been successfully placed.",
         "orderId": "Your Order Id",
         "backHome": "Back to home"
-    },
-    "searchScreen": {
-        "recentlySearch": "Recently search",
-        "clearAll": "clear all",
-        "search": "Search your service",
-        "trendingSearch": "Trending search"
-
-    },
-    "notificationScreen": {
-        "notification": "Notification",
-        "noNotification": "No new notification",
-        "remove": "Notification removed."
-
-    },
-    "reviewScreen": {
-        "serviceReview": "Service review"
     },
     "pickAddressScreen": {
         "search": "Search ",
@@ -169,10 +107,6 @@
     },
     "messagesScreen": {
         "messages": "Messages"
-    },
-    "chatScreen": {
-        "typeHere": "Type your text here...."
-
     },
     "profileScreen": {
         "profile": "Profile",
@@ -229,63 +163,5 @@
         "please": "Please share your experience with us",
         "saySomething": "Say something",
         "send": "Send"
-    },
-    "termsConditionScreen": {
-        "termsCondition": "Terms & condition",
-        "shortDescription": "Lorem ipsum dolor sit amet, consectetur adipiscindf elitj. Eu scelerisque neque neque vestibulumaugued enullalkll quis mauris. Ac solliciegestapellentesqueg adipiscing. Leo aliquam, aliquam non sit valaoreethg Morbi felis volutpat eu vestibulum, ornare purus ath the puruse. Pretium maecenas in eget sapien odioh. ",
-        "dongDescription": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Imperdiet accumsan nec, enim viverra.Interdum massa diam. Pellentesque ornare ornare lobortis sit. Utpulvinar tincidunt amet mi elit rutrum. Liberolorem acommodof. Egestas vel duis ut a ivenenatisLectuss Lorem ipsum dolor sit amet, consectetur adipiscing elit.Imperdiet accumsan nec, enim viverra.Interdum massa diam.Pellentesque ornare ornare lobortis sit.Utpulvinar tincidunt amet mi elit rutrum.Liberolorem acommodof.Egestas vel duis ut a ivenenatisLectuss "
-    },
-    "privacyPolicyScreen": {
-        "privacyPolicy": "Privacy policy",
-        "shortDescription": "Lorem ipsum dolor sit amet, consectetur adipiscindf elitj. Eu scelerisque neque neque vestibulumaugued enullalkll quis mauris. Ac solliciegestapellentesqueg adipiscing. Leo aliquam, aliquam non sit valaoreethg Morbi felis volutpat eu vestibulum, ornare purus ath the puruse. Pretium maecenas in eget sapien odioh. ",
-        "dongDescription": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Imperdiet accumsan nec, enim viverra.Interdum massa diam. Pellentesque ornare ornare lobortis sit. Utpulvinar tincidunt amet mi elit rutrum. Liberolorem acommodof. Egestas vel duis ut a ivenenatisLectuss Lorem ipsum dolor sit amet, consectetur adipiscing elit.Imperdiet accumsan nec, enim viverra.Interdum massa diam.Pellentesque ornare ornare lobortis sit.Utpulvinar tincidunt amet mi elit rutrum.Liberolorem acommodof.Egestas vel duis ut a ivenenatisLectuss "
-    },
-    "fAQsScreen": {
-        "fAQs": "FAQs",
-        "question1": "How to book plumbar service?",
-        "question2": "How to book home clean service?",
-        "question3": "How to find best electrician?",
-        "question4": "What is the refer and earn process?",
-        "question5": "How to earn money?",
-        "answer": "Lorem ipsum dolor sit amet, consectetur adipiscindf elitj. Eu scelerisque neque neque vestibulumaugued enullalkll quis mauris. Ac solliciegestapellentesqueg adipiscing. Leo aliquam, aliquam non sit valaoreethg Morbi felis volutpat eu vestibulum, ornare purus ath the puruse. Pretium maecenas in eget sapien odioh. "
-    },
-    "contactUsScreen": {
-        "contactUs": "Contact us",
-        "email": "Email",
-        "phone": "Phone",
-        "name": "Name",
-        "enterName": "Enter your name",
-        "emailId": "Email id",
-        "enterEmail": "Enter your email id",
-        "message": "Message",
-        "writeMessage": "Write message here",
-        "send": "Send"
-    },
-    "appSettingScreen": {
-        "appSettings": "App settings",
-        "notification": "Notification",
-        "location": "Location",
-        "darkMode": "Dark mode",
-        "applicationUpdate": "Application update"
-    },
-    "favoriteScreen": {
-        "favorites": "Favorites",
-        "emptyFavorite": "Empty favorite list",
-        "remove": "Removed from Favorite"
-    },
-    "referAndEarnScreen": {
-        "refer": "Refer your friend and Earn money ",
-        "referYourFriends": "Refer your friends and get a reward of $10 ",
-        "shareLinkFriends": "Share this link to your friends, after they book service you  get $10 rewards at your wallet",
-        "shareLinkVia": "Share link via",
-        "signUp": "Invite your friend to sign up ",
-        "bookService": "After your friend book service ",
-        "yourWallet": "You get reward $10 at your wallet",
-        "message": "Write here..",
-        "toastCopy": "Copied"
-    },
-    "languageScreen": {
-        "language": "Language",
-        "update": "Update"
     }
 }

@@ -82,7 +82,7 @@ const ProfileScreen = () => {
               numberOfLines={1}
               style={{ ...Fonts.Medium14grey, overflow: "hidden" }}
             >
-              praneethperera@example.com
+              praneeth.20231202@iit.ac.lk
             </Text>
           </View>
 
@@ -118,7 +118,7 @@ const ProfileScreen = () => {
             }}
           >
             {tr("walletAmount")}
-            <Text style={{ ...Fonts.SemiBold20primary }}>: $200</Text>
+            <Text style={{ ...Fonts.SemiBold20primary }}>: Rs.5000.00</Text>
           </Text>
         </View>
 
@@ -340,7 +340,6 @@ const ProfileScreen = () => {
         </TouchableOpacity>
 
         <TouchableOpacity
-          // onPress={() => navigation.push("contactUs/contactUsScreen")}
           style={{
             flexDirection: isRtl ? "row-reverse" : "row",
             alignItems: "center",
