@@ -1,58 +1,45 @@
-import React from 'react';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import "./Profile.css";
 
-const ProfilePage = () => {
-  const user = {
-    name: 'John Doe',
-    profilePicture: 'https://via.placeholder.com/150', // Placeholder for profile image
-    location: 'New York, NY',
-    rating: 4.5,
-    bookingHistory: [
-      { service: 'Plumbing', provider: 'Mike the Plumber', date: '2025-03-01', price: '$120' },
-      { service: 'Cleaning', provider: 'Jane Clean', date: '2025-02-15', price: '$75' }
-    ],
+const Profile = () => {
+  const [profile, setProfile] = useState({
+    name: "",
+    email: "",
+    bio: "",
+    profilePic: "",
+  });
+
+  useEffect(() => {
+    axios.get("http://localhost:5000/profile").then((res) => {
+      setProfile(res.data);
+    });
+  }, []);
+
+  const handleChange = (e) => {
+    setProfile({ ...profile, [e.target.name]: e.target.value });
   };
 
-  const serviceProvider = {
-    name: 'Mike the Plumber',
-    services: ['Plumbing', 'Water Heater Repair', 'Leak Fix'],
-    rating: 4.8,
-    location: 'New York, NY'
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    axios.post("http://localhost:5000/profile", profile).then(() => {
+      alert("Profile Updated!");
+    });
   };
 
   return (
     <div className="profile-container">
-      <div className="profile-header">
-        <img src={user.profilePicture} alt="Profile" className="profile-image" />
-        <div className="profile-details">
-          <h1>{user.name}</h1>
-          <p>Location: {user.location}</p>
-          <p>Rating: {user.rating} ★</p>
-        </div>
-      </div>
-
-      <section className="booking-history">
-        <h2>Booking History</h2>
-        <ul>
-          {user.bookingHistory.map((booking, index) => (
-            <li key={index}>
-              <p><strong>Service:</strong> {booking.service}</p>
-              <p><strong>Provider:</strong> {booking.provider}</p>
-              <p><strong>Date:</strong> {booking.date}</p>
-              <p><strong>Price:</strong> {booking.price}</p>
-            </li>
-          ))}
-        </ul>
-      </section>
-
-      <section className="service-provider-info">
-        <h2>Service Provider Information</h2>
-        <p><strong>Name:</strong> {serviceProvider.name}</p>
-        <p><strong>Services Offered:</strong> {serviceProvider.services.join(', ')}</p>
-        <p><strong>Rating:</strong> {serviceProvider.rating} ★</p>
-        <p><strong>Location:</strong> {serviceProvider.location}</p>
-      </section>
+      <h2>My Profile</h2>
+      <img src={profile.profilePic || "https://via.placeholder.com/150"} alt="Profile" />
+      <form onSubmit={handleSubmit}>
+        <input type="text" name="name" value={profile.name} onChange={handleChange} placeholder="Name" required />
+        <input type="email" name="email" value={profile.email} onChange={handleChange} placeholder="Email" required />
+        <textarea name="bio" value={profile.bio} onChange={handleChange} placeholder="Bio"></textarea>
+        <input type="text" name="profilePic" value={profile.profilePic} onChange={handleChange} placeholder="Profile Picture URL" />
+        <button type="submit">Save</button>
+      </form>
     </div>
   );
 };
 
-export default ProfilePage;
+export default Profile;
