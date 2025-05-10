@@ -11,9 +11,11 @@
   "include": [
     "**/*.ts",
     "**/*.tsx",
-    "types/**/*.ts",
-    "expo-env.d.ts",
+    "frontend/auth/signIn.jsx",
+    "app/index.tsx",
+    "app/layout.tsx",
     "nativewind-env.d.ts",
-    ".expo/types/**/*.ts"
+    ".expo/types/**/*.ts",
+    "expo-env.d.ts"
   ]
 }
